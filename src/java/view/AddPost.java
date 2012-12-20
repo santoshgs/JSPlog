@@ -70,7 +70,7 @@ public class AddPost extends HttpServlet {
             
 //code for the form and main body for writing a post            
             out.println("<p>");
-            out.println("<form action='../AddNewPost.do' method='post'>");
+            out.println("<form action='AddNewPost.do' method='post'>");
             out.println("<strong>Title:</strong> <input type='text' name='title' size='40'/><br/>");
             out.println("<strong>Category:</strong>");
             out.println("<select name='category'>");

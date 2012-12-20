@@ -4,6 +4,8 @@
  */
 package controller;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,19 +32,78 @@ public class AddNewPost extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+
+        // get all parameters from previous form
+        String Post_title = request.getParameter("title");
+        String Post_category = request.getParameter("category");
+        String Post_body = request.getParameter("body");
+
+        PrintWriter out = response.getWriter(); // used to write servlet output
+        PrintWriter PostWriter = null; // used to write to file output
+
+
+        // testing to find out where post.txt is saved. Path can be seen in source.
+        File dir1 = new File(".");
+        out.println("<!--");
+        out.println("Current dir : " + dir1.getCanonicalPath());
+        out.println("-->");
+        // end of test block
+
+        String PostFile = Post_title + ".html"; // file output and file type
+
         try {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddNewPost</title>");            
+            out.println("<title>Servlet AddNewPost</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddNewPost at " + request.getContextPath() + "</h1>");
+            out.println("Your new post titled <h3>'" + Post_title + "'</h3> has been added.");
+
+            // begin writing to file
+
+            PostWriter = new PrintWriter(new FileWriter(PostFile, true));
+
+            //formatting for post to appear as HTML
+
+            PostWriter.print("<html><title>");
+            PostWriter.print(Post_title);
+            PostWriter.print("</title>");
+            PostWriter.print("<body>");
+            PostWriter.print("<table border='1' align='center' bgcolor='#e3e3e3'>");
+            PostWriter.print("<tr>");
+            PostWriter.print("<td>");
+            PostWriter.print("<h2>");
+            PostWriter.print(Post_title);
+            PostWriter.print("</h2>");
+            PostWriter.println();
+            PostWriter.print("<small>");
+            PostWriter.print(Post_category);
+            PostWriter.print("</small>");
+            PostWriter.println();
+            PostWriter.print("<h5>");
+            PostWriter.print(Post_body);
+            PostWriter.print("</h5>");
+            PostWriter.println();
+            PostWriter.println();
+            PostWriter.println();
+            PostWriter.print("</tr>");
+            PostWriter.print("</td>");
+            PostWriter.print("</table>");
+            PostWriter.print("</body>");
+            PostWriter.print("</html>");
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
             out.close();
+            if (PostWriter != null) {
+                try {
+                    PostWriter.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
         }
     }
 
