@@ -12,6 +12,10 @@
             <param-value>College,Travel,Personal</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>AdminList</servlet-name>
+        <servlet-class>view.AdminList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddNewPost</servlet-name>
         <url-pattern>/admin/AddNewPost.do</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>AddPost</servlet-name>
         <url-pattern>/admin/AddPost.view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminList</servlet-name>
+        <url-pattern>/admin/AdminList.view</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

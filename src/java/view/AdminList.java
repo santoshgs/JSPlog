@@ -2,74 +2,47 @@ package view;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Posts;
+
 
 /**
- *
  * @author Santosh
  */
-public class AddPost extends HttpServlet {
+public class AdminList extends HttpServlet {
 
-    
-    String[] CATEGORIES;
 
-    // make use of initialization parameter
-    public void init()
-    {
-        String categories_list = getInitParameter("categories-list");
-        if(categories_list==null)
-        {
-            categories_list=DEFAULT_CATEGORIES;
-        }
-        CATEGORIES=categories_list.split(",");
-    }
-    
-    // initialize default
-    private static final String DEFAULT_CATEGORIES="Personal,Travel";
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        // Retrieval of context items
+        ServletContext context = getServletContext();
+        List postsList = (List) context.getAttribute("postsList");
+        
         try {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewPost</title>");
+            out.println("<title>Admin List of all posts</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<table align='right'>");
-            out.println("<tr bgcolor='#ffeeee'>");
-            out.println("<td>");
+            out.println("<h2>List of all posts</h2>");
             out.println("<ul>");
-            out.println("<li><a href=''>New Post</a>&emsp;</li>");
-            out.println("<li><a href=''>New Page</a>&emsp;</li>");
-            out.println("<li><a href='..'>Visit Site</a>&emsp;</li>");
-            out.println("<li><a href=''>Logout</a>&emsp;</li>");
-            out.println("</ul>");
-            out.println("</td>");
-            out.println("</tr>");
-            out.println("</table>");
-            
-//code for the form and main body for writing a post            
-            out.println("<p>");
-            out.println("<form action='AddNewPost.do' method='post'>");
-            out.println("<strong>Title:</strong> <input type='text' name='title' size='40'/><br/>");
-            out.println("<strong>Category:</strong>");
-            out.println("<select name='category'>");
-            out.println("<option value='UNKNOWN'>select..</option>");
-            for(int i=0;i<CATEGORIES.length;i++)
-            {
-                out.print("<option value='"+CATEGORIES[i]+"'");
-                out.println(">"+CATEGORIES[i]+"</option>");
+            Iterator items = postsList.iterator();
+            while(items.hasNext()){
+                Posts posts = (Posts) items.next();
+             out.println("<li>"+ posts.getTitle() + "</li>");               
             }
-            out.println("</select><br/>");
-            out.println("<strong>Body:</strong> <input type='text' name='body' size='40' /><br/>");
-            out.println("<input type='submit' name='Submit'/>");
-            out.println("</form>");
-            out.println("</p>");
+            out.println("</ul>");
             out.println("</body>");
             out.println("</html>");
         } finally {            

@@ -1,17 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Posts;
 
 /**
  *
@@ -19,16 +20,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AddNewPost extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -49,6 +40,8 @@ public class AddNewPost extends HttpServlet {
         out.println("-->");
         // end of test block
 
+//        String DIRECTORY = "/some/";
+//        String PostFile = DIRECTORY + Post_title + ".html"; // file output and file type
         String PostFile = Post_title + ".html"; // file output and file type
 
         try {
@@ -58,6 +51,7 @@ public class AddNewPost extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("Your new post titled <h3>'" + Post_title + "'</h3> has been added.");
+            //out.println("<br /><a href='C:/dev/glassfish3/glassfish/domains/blackbeauty/"+Post_title+".html'>Click here to view post.</a>");
 
             // begin writing to file
 
@@ -93,6 +87,21 @@ public class AddNewPost extends HttpServlet {
             PostWriter.print("</html>");
             out.println("</body>");
             out.println("</html>");
+
+            // add to model
+            Posts posts = new Posts(Post_title, Post_category, Post_body);
+
+            request.setAttribute("posts", posts);
+
+            // Create a list to save all the posts
+            ServletContext context = getServletContext();
+            List postsList = (List) context.getAttribute("postsList");
+            postsList.add(posts);
+            
+           //forward to admin list page
+            RequestDispatcher view = request.getRequestDispatcher("/AdminList.view");  
+            view.forward(request, response);  
+
         } catch (Exception e) {
             System.err.println(e);
         } finally {
