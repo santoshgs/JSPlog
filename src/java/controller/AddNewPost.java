@@ -101,7 +101,7 @@ public class AddNewPost extends HttpServlet {
            //forward to admin list page
             RequestDispatcher view = request.getRequestDispatcher("/AdminList.view");  
             view.forward(request, response);  
-
+            
         } catch (Exception e) {
             System.err.println(e);
         } finally {
