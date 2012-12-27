@@ -26,7 +26,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminList</servlet-name>
-        <url-pattern>/admin/AdminList.view</url-pattern>
+        <url-pattern>/admin/list.view</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -34,6 +34,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

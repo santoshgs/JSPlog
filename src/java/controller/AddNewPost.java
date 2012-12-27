@@ -29,64 +29,43 @@ public class AddNewPost extends HttpServlet {
         String Post_category = request.getParameter("category");
         String Post_body = request.getParameter("body");
 
-        PrintWriter out = response.getWriter(); // used to write servlet output
-        PrintWriter PostWriter = null; // used to write to file output
+//        PrintWriter out = response.getWriter(); // used to write webpage output
+        PrintWriter PostWriter = null; // used to write to file
 
 
         // testing to find out where post.txt is saved. Path can be seen in source.
-        File dir1 = new File(".");
-        out.println("<!--");
-        out.println("Current dir : " + dir1.getCanonicalPath());
-        out.println("-->");
+//        File dir1 = new File(".");
+//        out.println("<!--");
+//        out.println("Current dir : " + dir1.getCanonicalPath());
+//        out.println("-->");
         // end of test block
 
-//        String DIRECTORY = "/some/";
-//        String PostFile = DIRECTORY + Post_title + ".html"; // file output and file type
-        String PostFile = Post_title + ".html"; // file output and file type
+//        String PostFile = Post_title + ".html"; // file output and file type
+
+        String PostFile = "index.txt";
 
         try {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddNewPost</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("Your new post titled <h3>'" + Post_title + "'</h3> has been added.");
-            //out.println("<br /><a href='C:/dev/glassfish3/glassfish/domains/blackbeauty/"+Post_title+".html'>Click here to view post.</a>");
-
             // begin writing to file
 
             PostWriter = new PrintWriter(new FileWriter(PostFile, true));
 
             //formatting for post to appear as HTML
 
-            PostWriter.print("<html><title>");
+            PostWriter.print("<div class='entry'>");
+            PostWriter.print("<h3>");
             PostWriter.print(Post_title);
-            PostWriter.print("</title>");
-            PostWriter.print("<body>");
-            PostWriter.print("<table border='1' align='center' bgcolor='#e3e3e3'>");
-            PostWriter.print("<tr>");
-            PostWriter.print("<td>");
-            PostWriter.print("<h2>");
-            PostWriter.print(Post_title);
-            PostWriter.print("</h2>");
+            PostWriter.print("</h3>");
             PostWriter.println();
-            PostWriter.print("<small>");
+            PostWriter.print("<center>Posted in category:<strong> ");
             PostWriter.print(Post_category);
-            PostWriter.print("</small>");
+            PostWriter.print("</strong></center>");
             PostWriter.println();
-            PostWriter.print("<h5>");
+            PostWriter.print("<p>");
             PostWriter.print(Post_body);
-            PostWriter.print("</h5>");
+            PostWriter.print("</p>");
+            PostWriter.print("</div>");
             PostWriter.println();
-            PostWriter.println();
-            PostWriter.println();
-            PostWriter.print("</tr>");
-            PostWriter.print("</td>");
-            PostWriter.print("</table>");
-            PostWriter.print("</body>");
-            PostWriter.print("</html>");
-            out.println("</body>");
-            out.println("</html>");
+
 
             // add to model
             Posts posts = new Posts(Post_title, Post_category, Post_body);
@@ -95,17 +74,18 @@ public class AddNewPost extends HttpServlet {
 
             // Create a list to save all the posts
             ServletContext context = getServletContext();
-            List postsList = (List) context.getAttribute("postsList");
+            List postsList = new LinkedList();
+            context.setAttribute("postsList", postsList);
             postsList.add(posts);
-            
-           //forward to admin list page
-            RequestDispatcher view = request.getRequestDispatcher("/AdminList.view");  
-            view.forward(request, response);  
-            
+
+            //forward to admin list page
+            RequestDispatcher view = request.getRequestDispatcher("./");
+            view.forward(request, response);
+
         } catch (Exception e) {
             System.err.println(e);
         } finally {
-            out.close();
+//            out.close();
             if (PostWriter != null) {
                 try {
                     PostWriter.close();
