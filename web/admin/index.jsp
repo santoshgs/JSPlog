@@ -40,7 +40,7 @@
                     <ul>
                         <li class="first" id="current"><a href="../index.jsp">Home</a></li>
                         <li><a href='AddPost.view'>New Post</a></li>	
-                        <li><a href='logout.jsp'>Logout</a></li>	
+                        <li><a href='../Logout.do'>Logout</a></li>	
                     </ul>		
                 </div>	
 

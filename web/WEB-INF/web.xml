@@ -16,6 +16,14 @@
         <servlet-name>AdminList</servlet-name>
         <servlet-class>view.AdminList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>controller.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddNewPost</servlet-name>
         <url-pattern>/admin/AddNewPost.do</url-pattern>
@@ -27,6 +35,14 @@
     <servlet-mapping>
         <servlet-name>AdminList</servlet-name>
         <url-pattern>/admin/list.view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
